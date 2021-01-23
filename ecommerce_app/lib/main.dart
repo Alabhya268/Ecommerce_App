@@ -14,9 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        accentColor: Color(0xFFFF1E00),
         fontFamily: 'Montserrat',
-        primaryColor: Colors.deepPurpleAccent,
-        accentColor: Colors.deepOrangeAccent,
       ),
       home: LandingPage(),
     );

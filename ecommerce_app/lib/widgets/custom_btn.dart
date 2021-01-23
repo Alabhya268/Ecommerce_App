@@ -4,18 +4,20 @@ class CustomBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
   final bool outlineBtn;
+  final bool isLoading;
 
-  const CustomBtn({Key key, this.text, this.onPressed, this.outlineBtn});
+  const CustomBtn(
+      {Key key, this.text, this.onPressed, this.outlineBtn, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
     bool _outlineBtn = outlineBtn ?? false;
+    bool _isLoading = isLoading ?? false;
 
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         height: 65,
-        alignment: Alignment.center,
         margin: EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 24,
@@ -34,13 +36,32 @@ class CustomBtn extends StatelessWidget {
           horizontal: 24,
           vertical: 12,
         ),
-        child: Text(
-          text == null ? 'Text' : text,
-          style: TextStyle(
-            color: _outlineBtn ? Colors.black : Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+        child: Stack(
+          children: [
+            Visibility(
+              visible: _isLoading ? false : true,
+              child: Center(
+                child: Text(
+                  text == null ? 'Text' : text,
+                  style: TextStyle(
+                    color: _outlineBtn ? Colors.black : Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _isLoading,
+              child: Center(
+                child: SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

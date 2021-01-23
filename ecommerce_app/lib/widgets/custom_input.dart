@@ -3,8 +3,21 @@ import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
   final String hintText;
+  final Function(String) onChanged;
+  final Function(String) onSubmitted;
+  final FocusNode focusNode;
+  final TextInputAction textInputAction;
+  final bool isPasswordFeild;
 
-  const CustomInput({Key key, this.hintText});
+  const CustomInput(
+      {Key key,
+      this.hintText,
+      this.onChanged,
+      this.onSubmitted,
+      this.focusNode,
+      this.textInputAction,
+      this.isPasswordFeild})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +32,11 @@ class CustomInput extends StatelessWidget {
         ),
       ),
       child: TextField(
+        obscureText: isPasswordFeild ?? false,
+        focusNode: focusNode,
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        textInputAction: textInputAction,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
             horizontal: 18,
