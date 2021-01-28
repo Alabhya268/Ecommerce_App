@@ -1,3 +1,6 @@
+import 'package:ecommerce_app/tabs/home_tab.dart';
+import 'package:ecommerce_app/tabs/saved_tab.dart';
+import 'package:ecommerce_app/tabs/search_tab.dart';
 import 'package:ecommerce_app/widgets/bottom_tabs.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   PageController _tabPageController;
   int _selectedTab = 0;
 
@@ -31,31 +33,16 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: PageView(
-              controller:  _tabPageController,
+              controller: _tabPageController,
               onPageChanged: (num) {
                 setState(() {
                   _selectedTab = num;
-                }); 
+                });
               },
               children: [
-                Container(
-                  child: Center(
-                    child: Text('Homepage',
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Center(
-                    child: Text('Search Page',
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Center(
-                    child: Text('Saved Page',
-                    ),
-                  ),
-                ),
+                HomeTab(),
+                SearchTab(),
+                SavedTab(),
               ],
             ),
           ),
@@ -64,7 +51,8 @@ class _HomePageState extends State<HomePage> {
               selectedTab: _selectedTab,
               tabPressed: (num) {
                 setState(() {
-                 _tabPageController.animateToPage(num, duration: Duration(microseconds: 1), curve: Curves.ease);
+                  _tabPageController.animateToPage(num,
+                      duration: Duration(microseconds: 1), curve: Curves.ease);
                 });
               },
             ),

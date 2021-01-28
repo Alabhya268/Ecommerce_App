@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BottomTabs extends StatefulWidget {
-
   final int selectedTab;
   final Function(int) tabPressed;
 
-  const BottomTabs({Key key, this.selectedTab, this.tabPressed}) : super(key: key);
-
+  const BottomTabs({Key key, this.selectedTab, this.tabPressed})
+      : super(key: key);
 
   @override
   _BottomTabsState createState() => _BottomTabsState();
@@ -36,14 +35,14 @@ class _BottomTabsState extends State<BottomTabs> {
             icon: Icons.home_outlined,
             selected: _selectedTab == 0 ? true : false,
             onPressed: () {
-             widget.tabPressed(0);
+              widget.tabPressed(0);
             },
           ),
           BottomTabBtn(
             icon: Icons.search,
             selected: _selectedTab == 1 ? true : false,
             onPressed: () {
-             widget.tabPressed(1);
+              widget.tabPressed(1);
             },
           ),
           BottomTabBtn(
