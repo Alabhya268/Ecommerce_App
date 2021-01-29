@@ -3,6 +3,7 @@ import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/widgets/_product_size.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
@@ -18,7 +19,14 @@ class _ProductPageState extends State<ProductPage> {
   final CollectionReference _productsRef =
       FirebaseFirestore.instance.collection('Products');
 
-  final CollectionReference _userRef = FirebaseFirestore.instance.collection('User');
+  final CollectionReference _userRef =
+      FirebaseFirestore.instance.collection('Cart');
+
+  User _user = FirebaseAuth.instance.currentUser;
+
+  Future _addTOCart() {
+    return _userRef.doc().set({'size': 1, 'uid': '${_user.uid}'});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,19 +129,33 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                'Add to Cart',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                            child: GestureDetector(
+                              onTap: () {
+                                _addTOCart().then((value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Product added to cart'),
+                                      duration: Duration(
+                                        seconds: 1,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  'Add to Cart',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),
@@ -157,6 +179,7 @@ class _ProductPageState extends State<ProductPage> {
           CustomActionBar(
             hasBackArrow: true,
             hasTitle: false,
+            uid: _user.uid,
           ),
         ],
       ),
