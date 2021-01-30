@@ -8,16 +8,18 @@ class CustomInput extends StatelessWidget {
   final FocusNode focusNode;
   final TextInputAction textInputAction;
   final bool isPasswordFeild;
+  final TextInputType textInputType;
 
-  const CustomInput(
-      {Key key,
-      this.hintText,
-      this.onChanged,
-      this.onSubmitted,
-      this.focusNode,
-      this.textInputAction,
-      this.isPasswordFeild})
-      : super(key: key);
+  const CustomInput({
+    Key key,
+    this.hintText,
+    this.onChanged,
+    this.onSubmitted,
+    this.focusNode,
+    this.textInputAction,
+    this.isPasswordFeild,
+    this.textInputType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CustomInput extends StatelessWidget {
         ),
       ),
       child: TextField(
+        keyboardType: textInputType,
         obscureText: isPasswordFeild ?? false,
         focusNode: focusNode,
         onChanged: onChanged,

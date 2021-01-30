@@ -114,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Column(
                 children: [
                   CustomInput(
+                    textInputType: TextInputType.emailAddress,
                     hintText: 'Email...',
                     onChanged: (value) {
                       _registerEmail = value;

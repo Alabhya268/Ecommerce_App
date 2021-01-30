@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
-import 'package:ecommerce_app/widgets/_product_size.dart';
+import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ecommerce_app/widgets/product_size.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
@@ -16,16 +15,17 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final CollectionReference _productsRef =
-      FirebaseFirestore.instance.collection('Products');
+  FirebaseServices _firebaseServices = FirebaseServices();
 
-  final CollectionReference _userRef =
-      FirebaseFirestore.instance.collection('Cart');
-
-  User _user = FirebaseAuth.instance.currentUser;
+  String _selectedProductSize = '0';
 
   Future _addTOCart() {
-    return _userRef.doc().set({'size': 1, 'uid': '${_user.uid}'});
+    return _firebaseServices.cartRef.doc().set({
+      'datetime': DateTime.now(),
+      'productid': widget.productId,
+      'size': _selectedProductSize,
+      'uid': '${_firebaseServices.getUserId()}'
+    });
   }
 
   @override
@@ -34,7 +34,7 @@ class _ProductPageState extends State<ProductPage> {
       body: Stack(
         children: [
           FutureBuilder(
-            future: _productsRef.doc(widget.productId).get(),
+            future: _firebaseServices.productsRef.doc(widget.productId).get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 Scaffold(
@@ -50,7 +50,9 @@ class _ProductPageState extends State<ProductPage> {
                 Map<String, dynamic> documentData = snapshot.data.data();
 
                 List imageList = documentData['images'];
-                List productSizes = documentData["size"];
+                List productSizes = documentData['size'];
+
+                _selectedProductSize = productSizes[0];
 
                 return ListView(
                   padding: EdgeInsets.all(0),
@@ -106,6 +108,9 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ),
                     ProductSize(
+                      onSelected: (size) {
+                        _selectedProductSize = size;
+                      },
                       productSize: productSizes,
                     ),
                     Padding(
@@ -179,7 +184,7 @@ class _ProductPageState extends State<ProductPage> {
           CustomActionBar(
             hasBackArrow: true,
             hasTitle: false,
-            uid: _user.uid,
+            uid: _firebaseServices.getUserId(),
           ),
         ],
       ),

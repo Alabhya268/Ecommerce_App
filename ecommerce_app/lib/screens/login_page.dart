@@ -111,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   CustomInput(
+                    textInputType: TextInputType.emailAddress,
                     hintText: 'Email...',
                     onChanged: (value) {
                       _registerEmail = value;
