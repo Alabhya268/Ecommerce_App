@@ -43,6 +43,11 @@ class _CartPageState extends State<CartPage> {
                     (document) {
                       return ProductCard(
                         document: document,
+                        onPressed: () {
+                          _firebaseServices.cartRef
+                              .doc('${document.id}')
+                              .delete();
+                        },
                       );
                     },
                   ).toList(),

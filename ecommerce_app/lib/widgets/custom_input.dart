@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,7 @@ class CustomInput extends StatelessWidget {
   final TextInputAction textInputAction;
   final bool isPasswordFeild;
   final TextInputType textInputType;
+  final double horizontalPadding;
 
   const CustomInput({
     Key key,
@@ -19,6 +22,7 @@ class CustomInput extends StatelessWidget {
     this.textInputAction,
     this.isPasswordFeild,
     this.textInputType,
+    this.horizontalPadding,
   }) : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class CustomInput extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 8,
-        horizontal: 24,
+        horizontal: horizontalPadding ?? 24,
       ),
       decoration: BoxDecoration(
         color: Color(

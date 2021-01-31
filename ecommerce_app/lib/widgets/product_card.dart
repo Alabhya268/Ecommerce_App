@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final QueryDocumentSnapshot document;
+  final Function onPressed;
 
-  ProductCard({Key key, this.document}) : super(key: key);
+  ProductCard({Key key, this.document, this.onPressed}) : super(key: key);
 
   FirebaseServices _firebaseServices = FirebaseServices();
 
@@ -58,7 +59,7 @@ class ProductCard extends StatelessWidget {
                         '${_productMap['images'][0]}',
                         width: 70,
                         height: 70,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                         filterQuality: FilterQuality.low,
                       ),
                       Padding(
@@ -79,12 +80,13 @@ class ProductCard extends StatelessWidget {
                                 color: Theme.of(context).accentColor,
                               ),
                             ),
-                            Text(
-                              'Size - ${document.data()['size']}',
-                              style: TextStyle(
-                                fontSize: 18,
+                            if (document.data()['size'] != null)
+                              Text(
+                                'Size - ${document.data()['size']}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -92,9 +94,10 @@ class ProductCard extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(Icons.remove_circle_outline_outlined),
-                    onPressed: () {
-                      _firebaseServices.cartRef.doc('${document.id}').delete();
-                    },
+                    onPressed: onPressed,
+                    //  () {
+                    //   _firebaseServices.cartRef.doc('${document.id}').delete();
+                    // },
                   ),
                 ],
               ),

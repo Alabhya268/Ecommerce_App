@@ -19,11 +19,19 @@ class _ProductPageState extends State<ProductPage> {
 
   String _selectedProductSize = '0';
 
-  Future _addTOCart() {
+  Future _addToCart() {
     return _firebaseServices.cartRef.doc().set({
       'datetime': DateTime.now(),
       'productid': widget.productId,
       'size': _selectedProductSize,
+      'uid': '${_firebaseServices.getUserId()}'
+    });
+  }
+
+  Future _addToSaved() {
+    return _firebaseServices.savedRef.doc().set({
+      'datetime': DateTime.now(),
+      'productid': widget.productId,
       'uid': '${_firebaseServices.getUserId()}'
     });
   }
@@ -117,27 +125,41 @@ class _ProductPageState extends State<ProductPage> {
                       padding: const EdgeInsets.all(24.0),
                       child: Row(
                         children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 16),
-                            height: 65,
-                            width: 65,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Color(
-                                0xFFDCDCDC,
+                          GestureDetector(
+                            onTap: () {
+                              _addToSaved().then((value) {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Product Saved'),
+                                    duration: Duration(
+                                      seconds: 1,
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 16),
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Color(
+                                  0xFFDCDCDC,
+                                ),
                               ),
-                            ),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.bookmark_border_outlined,
-                              size: 30,
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.bookmark_border_outlined,
+                                size: 30,
+                              ),
                             ),
                           ),
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                _addTOCart().then((value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                _addToCart().then((value) {
+                                  Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Product added to cart'),
                                       duration: Duration(
