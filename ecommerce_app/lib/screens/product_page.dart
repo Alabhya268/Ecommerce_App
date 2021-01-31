@@ -128,7 +128,7 @@ class _ProductPageState extends State<ProductPage> {
                           GestureDetector(
                             onTap: () {
                               _addToSaved().then((value) {
-                                Scaffold.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Product Saved'),
                                     duration: Duration(
@@ -159,7 +159,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: GestureDetector(
                               onTap: () {
                                 _addToCart().then((value) {
-                                  Scaffold.of(context).showSnackBar(
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Product added to cart'),
                                       duration: Duration(
