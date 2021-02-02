@@ -18,6 +18,8 @@ class CustomActionBar extends StatelessWidget {
     bool _hasBackArrow = hasBackArrow ?? false;
     bool _hasTitle = hasTitle ?? true;
 
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+
     Stream<QuerySnapshot> _userRef = FirebaseFirestore.instance
         .collection('Cart')
         .where('uid', isEqualTo: uid)
@@ -26,7 +28,7 @@ class CustomActionBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: Colors.white),
       padding: EdgeInsets.only(
-        top: 45,
+        top: 10 + statusBarHeight,
         left: 12,
         right: 12,
         bottom: 10,
