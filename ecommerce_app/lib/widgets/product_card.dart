@@ -95,6 +95,7 @@ class ProductCard extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.remove_circle_outline_outlined),
                     onPressed: onPressed,
+                    color: Colors.white70,
                     //  () {
                     //   _firebaseServices.cartRef.doc('${document.id}').delete();
                     // },

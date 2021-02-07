@@ -19,7 +19,7 @@ class _BottomTabsState extends State<BottomTabs> {
   Widget build(BuildContext context) {
     _selectedTab = widget.selectedTab ?? 0;
     return Container(
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+      decoration: BoxDecoration(color: Color(0xFF1F1F1F), boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.05),
           spreadRadius: 1,
@@ -84,16 +84,18 @@ class BottomTabBtn extends StatelessWidget {
         child: Icon(
           icon ?? Icons.home_outlined,
           size: 27,
-          color: _selected ? Theme.of(context).accentColor : Colors.black87,
+          color: _selected ? Theme.of(context).accentColor : Colors.white70,
         ),
         decoration: BoxDecoration(
-            border: Border(
-          top: BorderSide(
+          border: Border(
+            top: BorderSide(
               color: _selected
                   ? Theme.of(context).accentColor
                   : Colors.transparent,
-              width: 2),
-        ),),
+              width: 2,
+            ),
+          ),
+        ),
       ),
     );
   }

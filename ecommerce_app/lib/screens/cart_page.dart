@@ -15,6 +15,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           StreamBuilder<QuerySnapshot>(

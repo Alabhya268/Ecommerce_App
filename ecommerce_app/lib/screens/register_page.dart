@@ -97,6 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Container(
           width: double.infinity,

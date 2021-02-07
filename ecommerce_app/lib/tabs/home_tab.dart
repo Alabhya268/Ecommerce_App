@@ -29,13 +29,14 @@ class HomeTab extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
+                  padding: EdgeInsets.only(
+                      top: 72 + MediaQuery.of(context).padding.top),
                   children: snapshot.data.docs.map((document) {
                     return Container(
                       height: 350,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          12,
-                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        color: Color(0xFF1E1E1E),
                       ),
                       margin: EdgeInsets.symmetric(
                         vertical: 12,

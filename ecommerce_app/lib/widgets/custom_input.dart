@@ -33,8 +33,9 @@ class CustomInput extends StatelessWidget {
         horizontal: horizontalPadding ?? 24,
       ),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
         color: Color(
-          0xFFF2F2F2,
+          0xFF323232,
         ),
       ),
       child: TextField(

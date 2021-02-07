@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomBtn extends StatelessWidget {
@@ -23,14 +24,11 @@ class CustomBtn extends StatelessWidget {
           vertical: 24,
         ),
         decoration: BoxDecoration(
-          color: _outlineBtn ? Colors.transparent : Colors.black,
-          borderRadius: BorderRadius.circular(
-            12,
-          ),
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
+          color: Constants.btnColor,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            Constants.boxShadow,
+          ],
         ),
         padding: EdgeInsets.symmetric(
           horizontal: 24,
@@ -44,7 +42,7 @@ class CustomBtn extends StatelessWidget {
                 child: Text(
                   text == null ? 'Text' : text,
                   style: TextStyle(
-                    color: _outlineBtn ? Colors.black : Colors.white,
+                    color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

@@ -39,6 +39,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
           FutureBuilder(
@@ -100,9 +101,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       child: Text(
                         '${documentData['desc']}' ?? 'Description',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                     Padding(
@@ -144,13 +143,20 @@ class _ProductPageState extends State<ProductPage> {
                               width: 65,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Color(
-                                  0xFFDCDCDC,
-                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    blurRadius: 2.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(2.0, 2.0),
+                                  ),
+                                ],
+                                color: Color(0xFF1D1D1D),
                               ),
                               alignment: Alignment.center,
                               child: Icon(
                                 Icons.bookmark_border_outlined,
+                                color: Colors.white70,
                                 size: 30,
                               ),
                             ),
@@ -173,8 +179,11 @@ class _ProductPageState extends State<ProductPage> {
                                 alignment: Alignment.center,
                                 height: 65,
                                 decoration: BoxDecoration(
-                                  color: Colors.black,
+                                  color: Color(0xFF1E1E1E),
                                   borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    Constants.boxShadow,
+                                  ],
                                 ),
                                 child: Text(
                                   'Add to Cart',

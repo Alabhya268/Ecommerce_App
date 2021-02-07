@@ -26,7 +26,7 @@ class CustomActionBar extends StatelessWidget {
         .snapshots();
 
     return Container(
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(color: Color(0xFF1F1F1F)),
       padding: EdgeInsets.only(
         top: 10 + statusBarHeight,
         left: 12,
@@ -44,15 +44,13 @@ class CustomActionBar extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFF1F1F1F),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
                 width: 42,
                 height: 42,
-                child: Icon(
-                  Icons.arrow_back_ios,
-                ),
+                child: Icon(Icons.arrow_back_ios, color: Colors.white),
               ),
             ),
           if (_hasTitle)
@@ -74,9 +72,11 @@ class CustomActionBar extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8),
-              ),
+                  color: Constants.btnColor,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    Constants.boxShadow,
+                  ]),
               child: StreamBuilder<QuerySnapshot>(
                 stream: _userRef,
                 builder: (context, snapshot) {

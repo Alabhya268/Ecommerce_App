@@ -46,7 +46,7 @@ class _SearchTabState extends State<SearchTab> {
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 108,
+                    top: 84 + MediaQuery.of(context).padding.top,
                   ),
                   children: snapshot.data.docs.map((document) {
                     return Container(
@@ -133,7 +133,7 @@ class _SearchTabState extends State<SearchTab> {
             top: 45,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(12),
               bottomRight: Radius.circular(12),
