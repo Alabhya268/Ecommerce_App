@@ -1,8 +1,6 @@
-import 'dart:ffi';
-
+import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -13,6 +11,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  FirebaseServices _firebaseServices = new FirebaseServices();
+
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
       context: context,
@@ -41,30 +41,20 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<String> _createAccount() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _registerEmail, password: _registerPassword);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return ('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        return ('The account already exists for that email.');
-      }
-      return e.message;
-    } catch (e) {
-      return (e.toString());
-    }
-  }
-
   Future<void> _submitForm() async {
     setState(() {
       _registerFormLoading = true;
     });
 
-    String _createAccountFeedback = await _createAccount();
+    String _createAccountFeedback = await _firebaseServices.createAccount(
+      email: _registerEmail,
+      password: _registerPassword,
+      name: _name,
+      add1: _add1,
+      add2: _add2,
+      city: _city,
+      zipcode: int.parse(_zipcode),
+    );
     if (_createAccountFeedback != null) {
       _alertDialogBuilder(_createAccountFeedback);
     } else {
@@ -77,8 +67,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _registerFormLoading = false;
 
-  String _registerEmail = null;
-  String _registerPassword = null;
+  String _name;
+  String _add1;
+  String _add2;
+  String _city;
+  String _zipcode;
+  String _registerEmail;
+  String _registerPassword;
 
   FocusNode _passwordFocusNode;
 
@@ -101,8 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: EdgeInsets.only(top: 24),
@@ -115,25 +110,60 @@ class _RegisterPageState extends State<RegisterPage> {
               Column(
                 children: [
                   CustomInput(
+                    textInputType: TextInputType.name,
+                    hintText: 'Name...',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      _name = value;
+                    },
+                  ),
+                  CustomInput(
+                    textInputType: TextInputType.streetAddress,
+                    hintText: 'Address Line 1...',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      _add1 = value;
+                    },
+                  ),
+                  CustomInput(
+                    textInputType: TextInputType.streetAddress,
+                    hintText: 'Address Line 2...',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      _add2 = value;
+                    },
+                  ),
+                  CustomInput(
+                    textInputType: TextInputType.streetAddress,
+                    hintText: 'City...',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      _city = value;
+                    },
+                  ),
+                  CustomInput(
+                    textInputType: TextInputType.number,
+                    hintText: 'Zipcode...',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      _zipcode = value;
+                    },
+                  ),
+                  CustomInput(
                     textInputType: TextInputType.emailAddress,
                     hintText: 'Email...',
+                    textInputAction: TextInputAction.next,
                     onChanged: (value) {
                       _registerEmail = value;
                     },
-                    onSubmitted: (value) {
-                      _passwordFocusNode.requestFocus();
-                    },
-                    textInputAction: TextInputAction.next,
                   ),
                   CustomInput(
-                    isPasswordFeild: true,
+                    textInputType: TextInputType.emailAddress,
                     hintText: 'Password...',
+                    textInputAction: TextInputAction.next,
+                    isPasswordFeild: true,
                     onChanged: (value) {
                       _registerPassword = value;
-                    },
-                    focusNode: _passwordFocusNode,
-                    onSubmitted: (value) {
-                      _submitForm();
                     },
                   ),
                   CustomBtn(

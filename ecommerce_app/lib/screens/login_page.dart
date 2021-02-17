@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/screens/register_page.dart';
+import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -12,6 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FirebaseServices _firebaseServices = new FirebaseServices();
+
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
       context: context,
@@ -40,30 +42,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<String> _createAccount() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _registerEmail, password: _registerPassword);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return ('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        return ('The account already exists for that email.');
-      }
-      return e.message;
-    } catch (e) {
-      return (e.toString());
-    }
-  }
-
   Future<void> _submitForm() async {
     setState(() {
       _registerFormLoading = true;
     });
 
-    String _createAccountFeedback = await _createAccount();
+    String _createAccountFeedback = await _firebaseServices.signInAccount(
+        email: _registerEmail, password: _registerPassword);
     if (_createAccountFeedback != null) {
       _alertDialogBuilder(_createAccountFeedback);
     }

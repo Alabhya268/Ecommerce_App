@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/models/productModel.dart';
 import 'package:ecommerce_app/screens/product_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
@@ -49,6 +50,7 @@ class _SearchTabState extends State<SearchTab> {
                     top: 84 + MediaQuery.of(context).padding.top,
                   ),
                   children: snapshot.data.docs.map((document) {
+                    Product product = Product.fromData(document.data());
                     return Container(
                       height: 350,
                       decoration: BoxDecoration(
@@ -80,7 +82,7 @@ class _SearchTabState extends State<SearchTab> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                  '${document.data()['images'][0]}',
+                                  '${product.images[0]}',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -97,11 +99,11 @@ class _SearchTabState extends State<SearchTab> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    document.data()['name'] ?? 'Product Name',
+                                    product.name ?? 'Product Name',
                                     style: Constants.regularHeading,
                                   ),
                                   Text(
-                                    "\$${document.data()['price']}" ?? 'Price',
+                                    "\$${product.price}" ?? 'Price',
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Theme.of(context).accentColor,

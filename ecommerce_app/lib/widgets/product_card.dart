@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/models/productModel.dart';
 import 'package:ecommerce_app/screens/product_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class ProductCard extends StatelessWidget {
           }
 
           if (productSnap.connectionState == ConnectionState.done) {
-            Map<String, dynamic> _productMap = productSnap.data.data();
+            Product _productMap = Product.fromData(productSnap.data.data());
             return Container(
               margin: EdgeInsets.symmetric(
                 vertical: 12,
@@ -56,7 +57,7 @@ class ProductCard extends StatelessWidget {
                   Row(
                     children: [
                       Image.network(
-                        '${_productMap['images'][0]}',
+                        '${_productMap.images[0]}',
                         width: 70,
                         height: 70,
                         fit: BoxFit.fitHeight,
@@ -69,12 +70,12 @@ class ProductCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${_productMap['name']}',
+                              '${_productMap.name}',
                               style: Constants.regularDarkText,
                               overflow: TextOverflow.fade,
                             ),
                             Text(
-                              '\$${_productMap['price']}',
+                              '\$${_productMap.price}',
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Theme.of(context).accentColor,
@@ -84,9 +85,7 @@ class ProductCard extends StatelessWidget {
                               Text(
                                 'Size - ${document.data()['size']}',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white
-                                ),
+                                    fontSize: 18, color: Colors.white),
                               ),
                           ],
                         ),

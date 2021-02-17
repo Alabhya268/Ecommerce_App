@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -12,18 +10,20 @@ class CustomInput extends StatelessWidget {
   final bool isPasswordFeild;
   final TextInputType textInputType;
   final double horizontalPadding;
+  final TextEditingController textEditingController;
 
-  const CustomInput({
-    Key key,
-    this.hintText,
-    this.onChanged,
-    this.onSubmitted,
-    this.focusNode,
-    this.textInputAction,
-    this.isPasswordFeild,
-    this.textInputType,
-    this.horizontalPadding,
-  }) : super(key: key);
+  const CustomInput(
+      {Key key,
+      this.hintText,
+      this.onChanged,
+      this.onSubmitted,
+      this.focusNode,
+      this.textInputAction,
+      this.isPasswordFeild,
+      this.textInputType,
+      this.horizontalPadding,
+      this.textEditingController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,7 @@ class CustomInput extends StatelessWidget {
         ),
       ),
       child: TextField(
+        controller: textEditingController,
         keyboardType: textInputType,
         obscureText: isPasswordFeild ?? false,
         focusNode: focusNode,

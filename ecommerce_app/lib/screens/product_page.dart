@@ -1,8 +1,12 @@
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/models/cart.dart';
+import 'package:ecommerce_app/models/productModel.dart';
+import 'package:ecommerce_app/models/saved.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
 import 'package:ecommerce_app/widgets/product_size.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
@@ -16,24 +20,19 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
+  Cart cart;
+  Saved saved;
 
   String _selectedProductSize = '0';
 
   Future _addToCart() {
-    return _firebaseServices.cartRef.doc().set({
-      'datetime': DateTime.now(),
-      'productid': widget.productId,
-      'size': _selectedProductSize,
-      'uid': '${_firebaseServices.getUserId()}'
-    });
+    cart = Cart(datetime: DateTime.now(), productid: widget.productId, size: _selectedProductSize, uid: _firebaseServices.getUserId());
+    return _firebaseServices.cartRef.doc().set(cart.toJson());
   }
 
   Future _addToSaved() {
-    return _firebaseServices.savedRef.doc().set({
-      'datetime': DateTime.now(),
-      'productid': widget.productId,
-      'uid': '${_firebaseServices.getUserId()}'
-    });
+    saved = Saved(datetime: DateTime.now(), productid: widget.productId, size: _selectedProductSize, uid: _firebaseServices.getUserId());
+    return _firebaseServices.savedRef.doc().set(saved.toJson());
   }
 
   @override
@@ -56,10 +55,10 @@ class _ProductPageState extends State<ProductPage> {
               }
 
               if (snapshot.connectionState == ConnectionState.done) {
-                Map<String, dynamic> documentData = snapshot.data.data();
+                Product documentData = Product.fromData(snapshot.data.data());
 
-                List imageList = documentData['images'];
-                List productSizes = documentData['size'];
+                List imageList = documentData.images;
+                List productSizes = documentData.size;
 
                 _selectedProductSize = productSizes[0];
 
@@ -77,7 +76,7 @@ class _ProductPageState extends State<ProductPage> {
                         bottom: 4,
                       ),
                       child: Text(
-                        '${documentData['name']}' ?? 'Product Name',
+                        '${documentData.name}' ?? 'Product Name',
                         style: Constants.boldHeading,
                       ),
                     ),
@@ -87,7 +86,7 @@ class _ProductPageState extends State<ProductPage> {
                         horizontal: 24,
                       ),
                       child: Text(
-                        '\$${documentData['price']}' ?? 'Price',
+                        '\$${documentData.price}' ?? 'Price',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: Colors.red,
@@ -100,7 +99,7 @@ class _ProductPageState extends State<ProductPage> {
                         horizontal: 24,
                       ),
                       child: Text(
-                        '${documentData['desc']}' ?? 'Description',
+                        '${documentData.desc}' ?? 'Description',
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
