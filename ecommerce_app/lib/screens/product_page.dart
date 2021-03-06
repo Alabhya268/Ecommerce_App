@@ -9,7 +9,6 @@ import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
 import 'package:ecommerce_app/widgets/product_size.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
@@ -29,14 +28,27 @@ class _ProductPageState extends State<ProductPage> {
 
   String _selectedProductSize = '0';
   String _comment = "";
+  String name;
+
+  @override
+  void initState() {
+    _getUserName();
+    super.initState();
+  }
+
+  Future _getUserName() async {
+   name = await _firebaseServices.usersRef.doc(_firebaseServices.getUserId()).get().then((value) => value.data()['name']);
+   return name;
+  }
 
   Future _addToComment() {
     comment = Comment(
-        uid: _firebaseServices.getUserId(),
-        productid: widget.productId,
-        comment: _comment,
-        datetime: DateTime.now(),
-        );
+      name: name.toString(),
+      uid: _firebaseServices.getUserId(),
+      productid: widget.productId,
+      comment: _comment,
+      datetime: Timestamp.now(),
+    );
     return _firebaseServices.commentRef.doc().set(comment.toJson());
   }
 
@@ -58,10 +70,11 @@ class _ProductPageState extends State<ProductPage> {
     return _firebaseServices.savedRef.doc().set(saved.toJson());
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> comments = _firebaseServices.commentRef
-        .where('uid', isEqualTo: _firebaseServices.getUserId())
         .orderBy('datetime', descending: true)
         .snapshots();
     return Scaffold(
@@ -237,6 +250,13 @@ class _ProductPageState extends State<ProductPage> {
                         });
                       },
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Comments',
+                        style: Constants.boldHeading,
+                      ),
+                    ),
                     StreamBuilder<QuerySnapshot>(
                       stream: comments,
                       builder: (context, snapshot) {
@@ -249,16 +269,46 @@ class _ProductPageState extends State<ProductPage> {
                         }
                         if (snapshot.connectionState ==
                             ConnectionState.active) {
-                          return ListView(
-                            padding: EdgeInsets.only(
-                              top: 100,
-                              bottom: 12,
+                          return Container(
+                            height: 400,
+                            child: ListView(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              children: snapshot.data.docs.map(
+                                (commentData) {
+                                  Comment comments =
+                                      Comment.fromData(commentData.data());
+                                  return Column(
+                                    children: [
+                                      ListTile(
+                                        title: Text(
+                                          '${comments.name}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Text(
+                                          '${comments.comment}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      Divider(
+                                        thickness: 0.5,
+                                        color: Colors.white,
+                                        indent: 20,
+                                        endIndent: 20,
+                                      )
+                                    ],
+                                  );
+                                },
+                              ).toList(),
                             ),
-                            children: snapshot.data.docs.map(
-                              (document) {
-                                return ;
-                              },
-                            ).toList(),
                           );
                         }
 

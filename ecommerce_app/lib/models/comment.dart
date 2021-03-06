@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Comment {
   String uid;
   String productid;
   String comment;
   String name;
-  DateTime datetime;
+  Timestamp datetime;
 
   Comment({this.uid, this.productid, this.comment, this.datetime, this.name});
 
