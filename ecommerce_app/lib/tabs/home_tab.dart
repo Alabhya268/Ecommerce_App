@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/constants.dart';
-import 'package:ecommerce_app/models/productModel.dart';
+import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/screens/product_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';

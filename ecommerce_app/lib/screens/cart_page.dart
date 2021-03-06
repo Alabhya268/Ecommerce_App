@@ -20,10 +20,7 @@ class _CartPageState extends State<CartPage> {
         children: [
           StreamBuilder<QuerySnapshot>(
             stream: _firebaseServices.cartRef
-                .where(
-                  'uid',
-                  isEqualTo: _firebaseServices.getUserId(),
-                )
+                .where('uid', isEqualTo: _firebaseServices.getUserId())
                 .orderBy('datetime', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {

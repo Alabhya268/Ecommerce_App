@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/models/cart.dart';
-import 'package:ecommerce_app/models/productModel.dart';
+import 'package:ecommerce_app/models/comment.dart';
+import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/models/saved.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
+import 'package:ecommerce_app/widgets/custom_input.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
 import 'package:ecommerce_app/widgets/product_size.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,21 +25,45 @@ class _ProductPageState extends State<ProductPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
   Cart cart;
   Saved saved;
+  Comment comment;
 
   String _selectedProductSize = '0';
+  String _comment = "";
+
+  Future _addToComment() {
+    comment = Comment(
+        uid: _firebaseServices.getUserId(),
+        productid: widget.productId,
+        comment: _comment,
+        datetime: DateTime.now(),
+        );
+    return _firebaseServices.commentRef.doc().set(comment.toJson());
+  }
 
   Future _addToCart() {
-    cart = Cart(datetime: DateTime.now(), productid: widget.productId, size: _selectedProductSize, uid: _firebaseServices.getUserId());
+    cart = Cart(
+        datetime: DateTime.now(),
+        productid: widget.productId,
+        size: _selectedProductSize,
+        uid: _firebaseServices.getUserId());
     return _firebaseServices.cartRef.doc().set(cart.toJson());
   }
 
   Future _addToSaved() {
-    saved = Saved(datetime: DateTime.now(), productid: widget.productId, size: _selectedProductSize, uid: _firebaseServices.getUserId());
+    saved = Saved(
+        datetime: DateTime.now(),
+        productid: widget.productId,
+        size: _selectedProductSize,
+        uid: _firebaseServices.getUserId());
     return _firebaseServices.savedRef.doc().set(saved.toJson());
   }
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> comments = _firebaseServices.commentRef
+        .where('uid', isEqualTo: _firebaseServices.getUserId())
+        .orderBy('datetime', descending: true)
+        .snapshots();
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
@@ -197,6 +224,53 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ],
                       ),
+                    ),
+                    CustomInput(
+                      hintText: 'Comment here...',
+                      onChanged: (value) {
+                        _comment = value;
+                      },
+                      onSubmitted: (value) {
+                        _addToComment();
+                        setState(() {
+                          _comment = "";
+                        });
+                      },
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: comments,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Container(
+                              child: Text('${snapshot.error}'),
+                            ),
+                          );
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.active) {
+                          return ListView(
+                            padding: EdgeInsets.only(
+                              top: 100,
+                              bottom: 12,
+                            ),
+                            children: snapshot.data.docs.map(
+                              (document) {
+                                return ;
+                              },
+                            ).toList(),
+                          );
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Theme.of(context).accentColor,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 );

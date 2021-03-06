@@ -6,7 +6,7 @@ class CustomBtn extends StatelessWidget {
   final Function onPressed;
   final bool outlineBtn;
   final bool isLoading;
-  final int padding;
+  final double padding;
 
   const CustomBtn(
       {Key key,
