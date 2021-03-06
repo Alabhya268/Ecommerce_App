@@ -37,8 +37,11 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future _getUserName() async {
-   name = await _firebaseServices.usersRef.doc(_firebaseServices.getUserId()).get().then((value) => value.data()['name']);
-   return name;
+    name = await _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserId())
+        .get()
+        .then((value) => value.data()['name']);
+    return name;
   }
 
   Future _addToComment() {
@@ -70,11 +73,55 @@ class _ProductPageState extends State<ProductPage> {
     return _firebaseServices.savedRef.doc().set(saved.toJson());
   }
 
-  
+  Future<void> _deleteComment(String uid) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF1E1E1E),
+          title: Text(
+            'Alert Dialog',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Do you want to delete this comment ?',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Yes',
+                style: TextStyle(color: Theme.of(context).accentColor),
+              ),
+              onPressed: () {
+                _firebaseServices.commentRef.doc(uid).delete();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('No',
+                  style: TextStyle(color: Theme.of(context).accentColor)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> comments = _firebaseServices.commentRef
+        .where('productid', isEqualTo: widget.productId)
         .orderBy('datetime', descending: true)
         .snapshots();
     return Scaffold(
@@ -283,21 +330,37 @@ class _ProductPageState extends State<ProductPage> {
                                   return Column(
                                     children: [
                                       ListTile(
-                                        title: Text(
-                                          '${comments.name}',
-                                          style: TextStyle(
+                                          title: Text(
+                                            '${comments.name}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          subtitle: Text(
+                                            '${comments.comment}',
+                                            style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        subtitle: Text(
-                                          '${comments.comment}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                          trailing: comments.uid ==
+                                                  _firebaseServices.getUserId()
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.edit_outlined,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {})
+                                              : null,
+                                          onLongPress: () async {
+                                            comments.uid ==
+                                                    _firebaseServices
+                                                        .getUserId()
+                                                ? await _deleteComment(
+                                                    commentData.id)
+                                                : null;
+                                          }),
                                       Divider(
                                         thickness: 0.5,
                                         color: Colors.white,

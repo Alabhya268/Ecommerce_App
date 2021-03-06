@@ -7,7 +7,7 @@ class FirebaseServices {
 
   String getUserId() {
     return _firebaseAuth.currentUser.uid;
-  }  
+  }
 
   final CollectionReference commentRef =
       FirebaseFirestore.instance.collection("comment");
