@@ -43,7 +43,6 @@ class ProductCard extends StatelessWidget {
             Product _productMap = Product.fromData(productSnap.data.data());
             return Container(
               margin: EdgeInsets.symmetric(
-                vertical: 12,
                 horizontal: 12,
               ),
               decoration: BoxDecoration(

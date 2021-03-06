@@ -150,7 +150,7 @@ class _ProductPageState extends State<ProductPage> {
                 _selectedProductSize = productSizes[0];
 
                 return ListView(
-                  padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.only(top: 0),
                   children: [
                     ImageSwipe(
                       imageList: imageList,
@@ -285,8 +285,15 @@ class _ProductPageState extends State<ProductPage> {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 24, right: 24),
+                      child: Text(
+                        'Reviews',
+                        style: Constants.boldHeading,
+                      ),
+                    ),
                     CustomInput(
-                      hintText: 'Comment here...',
+                      hintText: 'Write your review here...',
                       onChanged: (value) {
                         _comment = value;
                       },
@@ -297,12 +304,8 @@ class _ProductPageState extends State<ProductPage> {
                         });
                       },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(
-                        'Comments',
-                        style: Constants.boldHeading,
-                      ),
+                    Divider(
+                      height: 10
                     ),
                     StreamBuilder<QuerySnapshot>(
                       stream: comments,
@@ -316,61 +319,67 @@ class _ProductPageState extends State<ProductPage> {
                         }
                         if (snapshot.connectionState ==
                             ConnectionState.active) {
-                          return Container(
-                            height: 400,
-                            child: ListView(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              children: snapshot.data.docs.map(
-                                (commentData) {
-                                  Comment comments =
-                                      Comment.fromData(commentData.data());
-                                  return Column(
-                                    children: [
-                                      ListTile(
-                                          title: Text(
-                                            '${comments.name}',
-                                            style: TextStyle(
+                          return ConstrainedBox(
+                            constraints: new BoxConstraints(
+                              maxHeight: 500.0,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: ListView(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
+                                children: snapshot.data.docs.map(
+                                  (commentData) {
+                                    Comment comments =
+                                        Comment.fromData(commentData.data());
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                            title: Text(
+                                              '${comments.name}',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            subtitle: Text(
+                                              '${comments.comment}',
+                                              style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          subtitle: Text(
-                                            '${comments.comment}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
+                                              ),
                                             ),
-                                          ),
-                                          trailing: comments.uid ==
-                                                  _firebaseServices.getUserId()
-                                              ? IconButton(
-                                                  icon: Icon(
-                                                    Icons.edit_outlined,
-                                                    color: Colors.white,
-                                                  ),
-                                                  onPressed: () {})
-                                              : null,
-                                          onLongPress: () async {
-                                            comments.uid ==
+                                            trailing: comments.uid ==
                                                     _firebaseServices
                                                         .getUserId()
-                                                ? await _deleteComment(
-                                                    commentData.id)
-                                                : null;
-                                          }),
-                                      Divider(
-                                        thickness: 0.5,
-                                        color: Colors.white,
-                                        indent: 20,
-                                        endIndent: 20,
-                                      )
-                                    ],
-                                  );
-                                },
-                              ).toList(),
+                                                ? IconButton(
+                                                    icon: Icon(
+                                                      Icons.edit_outlined,
+                                                      color: Colors.white,
+                                                    ),
+                                                    onPressed: () {})
+                                                : null,
+                                            onLongPress: () async {
+                                              comments.uid ==
+                                                      _firebaseServices
+                                                          .getUserId()
+                                                  ? await _deleteComment(
+                                                      commentData.id)
+                                                  : null;
+                                            }),
+                                        Divider(
+                                          thickness: 0.5,
+                                          color: Colors.white,
+                                          indent: 20,
+                                          endIndent: 20,
+                                        )
+                                      ],
+                                    );
+                                  },
+                                ).toList(),
+                              ),
                             ),
                           );
                         }

@@ -14,7 +14,7 @@ class _ImageSwipeState extends State<ImageSwipe> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 100),
+      margin: EdgeInsets.only(top: 60 + MediaQuery.of(context).padding.top),
       height: 400,
       child: Stack(
         children: [

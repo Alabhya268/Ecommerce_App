@@ -11,9 +11,13 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
+  
 
   @override
   Widget build(BuildContext context) {
+
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
@@ -34,18 +38,22 @@ class _CartPageState extends State<CartPage> {
               if (snapshot.connectionState == ConnectionState.active) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 100,
+                    top: 70 + statusBarHeight,
                     bottom: 12,
                   ),
                   children: snapshot.data.docs.map(
                     (document) {
-                      return ProductCard(
-                        document: document,
-                        onPressed: () {
-                          _firebaseServices.cartRef
-                              .doc('${document.id}')
-                              .delete();
-                        },
+                      return Column(
+                        children: [
+                          ProductCard(
+                            document: document,
+                            onPressed: () {
+                              _firebaseServices.cartRef
+                                  .doc('${document.id}')
+                                  .delete();
+                            },
+                          ),
+                        ],
                       );
                     },
                   ).toList(),
