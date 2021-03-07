@@ -118,11 +118,71 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
+  Future<void> _updateComment(String uid, String comment) {
+    return _firebaseServices.commentRef
+        .doc(uid)
+        .update({'comment': comment})
+        .then((value) => print("Comment Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
+
+  Future<void> _updateCommentDialog(String uid, String initComment) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        String comment;
+        return AlertDialog(
+          backgroundColor: Color(0xFF1E1E1E),
+          title: Text(
+            'Alert Dialog',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextFormField(
+                  initialValue: initComment,
+                  onChanged: (value) => comment = value,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                child: Text(
+                  'Update',
+                  style: TextStyle(color: Theme.of(context).accentColor),
+                ),
+                onPressed: () {
+                  _updateComment(uid, comment);
+                  Navigator.of(context).pop();
+                }),
+            TextButton(
+              child: Text('Cancel',
+                  style: TextStyle(color: Theme.of(context).accentColor)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> comments = _firebaseServices.commentRef
         .where('productid', isEqualTo: widget.productId)
         .orderBy('datetime', descending: true)
+        .limit(5)
         .snapshots();
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -286,7 +346,8 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 24, right: 24),
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 24, bottom: 12),
                       child: Text(
                         'Reviews',
                         style: Constants.boldHeading,
@@ -303,9 +364,6 @@ class _ProductPageState extends State<ProductPage> {
                           _comment = "";
                         });
                       },
-                    ),
-                    Divider(
-                      height: 10
                     ),
                     StreamBuilder<QuerySnapshot>(
                       stream: comments,
@@ -324,12 +382,13 @@ class _ProductPageState extends State<ProductPage> {
                               maxHeight: 500.0,
                             ),
                             child: Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               decoration: BoxDecoration(),
                               child: ListView(
+                                padding: EdgeInsets.all(0),
                                 shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                ),
                                 children: snapshot.data.docs.map(
                                   (commentData) {
                                     Comment comments =
@@ -359,7 +418,11 @@ class _ProductPageState extends State<ProductPage> {
                                                       Icons.edit_outlined,
                                                       color: Colors.white,
                                                     ),
-                                                    onPressed: () {})
+                                                    onPressed: () {
+                                                      _updateCommentDialog(
+                                                          commentData.id,
+                                                          comments.comment);
+                                                    })
                                                 : null,
                                             onLongPress: () async {
                                               comments.uid ==

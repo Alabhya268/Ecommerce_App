@@ -11,11 +11,9 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
-  
 
   @override
   Widget build(BuildContext context) {
-
     double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
