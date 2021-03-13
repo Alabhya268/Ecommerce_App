@@ -7,6 +7,12 @@ class Constants {
     color: Colors.white,
   );
 
+  static TextStyle smallRegularHeading = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
+
   static TextStyle boldHeading = TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.w600,
