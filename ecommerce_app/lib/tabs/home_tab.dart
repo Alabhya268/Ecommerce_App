@@ -74,38 +74,32 @@ class HomeTab extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Positioned(
-                                bottom: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    "\$${product.price}" ?? 'Price',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Theme.of(context).accentColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                          Positioned(
+                            bottom: 30,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Text(
+                                "\$${product.price}" ?? 'Price',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).accentColor,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Positioned(
-                                bottom: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    document.data()['name'] ?? 'Product Name',
-                                    textDirection: TextDirection.ltr,
-                                    maxLines: 1,
-                                    style: Constants.smallRegularHeading,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                document.data()['name'] ?? 'Product Name',
+                                textDirection: TextDirection.ltr,
+                                maxLines: 1,
+                                style: Constants.smallRegularHeading,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ],
+                            ),
                           )
                         ],
                       ),
