@@ -41,17 +41,13 @@ class _CartPageState extends State<CartPage> {
                   ),
                   children: snapshot.data.docs.map(
                     (document) {
-                      return Column(
-                        children: [
-                          ProductCard(
-                            document: document,
-                            onPressed: () {
-                              _firebaseServices.cartRef
-                                  .doc('${document.id}')
-                                  .delete();
-                            },
-                          ),
-                        ],
+                      return ProductCard(
+                        document: document,
+                        onPressed: () {
+                          _firebaseServices.cartRef
+                              .doc('${document.id}')
+                              .delete();
+                        },
                       );
                     },
                   ).toList(),
@@ -65,6 +61,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                 );
               }
+              return null;
             },
           ),
           CustomActionBar(

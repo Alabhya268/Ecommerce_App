@@ -20,12 +20,12 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) {
         return AlertDialog(
           title: Text(
-             'Error',
+            'Error',
           ),
           content: Container(
             child: Text(
               error,
-           ),
+            ),
           ),
           actions: [
             TextButton(

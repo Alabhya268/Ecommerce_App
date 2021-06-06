@@ -192,11 +192,9 @@ class _ProductPageState extends State<ProductPage> {
             future: _firebaseServices.productsRef.doc(widget.productId).get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                Scaffold(
-                  body: Center(
-                    child: Text(
-                      "Error: ${snapshot.error}",
-                    ),
+                return Center(
+                  child: Text(
+                    "Error: ${snapshot.error}",
                   ),
                 );
               }
@@ -425,13 +423,15 @@ class _ProductPageState extends State<ProductPage> {
                                                     })
                                                 : null,
                                             onLongPress: () async {
-                                              comments.uid ==
+                                              if (comments.uid ==
                                                       _firebaseServices
-                                                          .getUserId()
-                                                  ? await _deleteComment(
-                                                      commentData.id)
-                                                  : null;
-                                            }),
+                                                          .getUserId()) {
+                                                            await _deleteComment(
+                                                      commentData.id);
+                                              }
+                                              
+                                                   
+                                            },),
                                         Divider(
                                           thickness: 0.5,
                                           color: Colors.white,
@@ -455,6 +455,7 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           );
                         }
+                        return null;
                       },
                     ),
                   ],
@@ -468,6 +469,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 );
               }
+              return null;
             },
           ),
           CustomActionBar(

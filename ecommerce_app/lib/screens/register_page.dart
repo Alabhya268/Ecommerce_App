@@ -49,11 +49,6 @@ class _RegisterPageState extends State<RegisterPage> {
     String _createAccountFeedback = await _firebaseServices.createAccount(
       email: _registerEmail,
       password: _registerPassword,
-      name: _name,
-      add1: _add1,
-      add2: _add2,
-      city: _city,
-      zipcode: int.parse(_zipcode),
     );
     if (_createAccountFeedback != null) {
       _alertDialogBuilder(_createAccountFeedback);
@@ -67,13 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _registerFormLoading = false;
 
-  String _name;
-  String _add1;
-  String _add2;
-  String _city;
-  String _zipcode;
-  String _registerEmail;
-  String _registerPassword;
+  String _registerEmail = '';
+  String _registerPassword = '';
 
   FocusNode _passwordFocusNode;
 
@@ -96,8 +86,8 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          child: ListView(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: EdgeInsets.only(top: 24),
@@ -109,46 +99,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Column(
                 children: [
-                  CustomInput(
-                    textInputType: TextInputType.name,
-                    hintText: 'Name...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _name = value;
-                    },
-                  ),
-                  CustomInput(
-                    textInputType: TextInputType.streetAddress,
-                    hintText: 'Address Line 1...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _add1 = value;
-                    },
-                  ),
-                  CustomInput(
-                    textInputType: TextInputType.streetAddress,
-                    hintText: 'Address Line 2...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _add2 = value;
-                    },
-                  ),
-                  CustomInput(
-                    textInputType: TextInputType.streetAddress,
-                    hintText: 'City...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _city = value;
-                    },
-                  ),
-                  CustomInput(
-                    textInputType: TextInputType.number,
-                    hintText: 'Zipcode...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _zipcode = value;
-                    },
-                  ),
                   CustomInput(
                     textInputType: TextInputType.emailAddress,
                     hintText: 'Email...',
