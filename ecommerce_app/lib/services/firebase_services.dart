@@ -9,6 +9,10 @@ class FirebaseServices {
     return _firebaseAuth.currentUser.uid;
   }
 
+  User getCurrentUser() {
+    return _firebaseAuth.currentUser;
+  }
+
   final CollectionReference commentRef =
       FirebaseFirestore.instance.collection("comment");
 
@@ -24,14 +28,11 @@ class FirebaseServices {
   final CollectionReference savedRef =
       FirebaseFirestore.instance.collection('Saved');
 
-  Future<String> createAccount(
-      {String email,
-      String password,
-      String name,
-      String add1,
-      String add2,
-      int zipcode,
-      String city}) async {
+  Future<String> createAccount({
+    String name,
+    String email,
+    String password,
+  }) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -39,10 +40,6 @@ class FirebaseServices {
       UserModel userModel = new UserModel(
           uid: user.uid,
           name: name,
-          add1: add1,
-          add2: add2,
-          zipcode: zipcode,
-          city: city,
           email: user.email,
           dateTime: DateTime.now());
       usersRef.doc(user.uid).set(userModel.toJson());

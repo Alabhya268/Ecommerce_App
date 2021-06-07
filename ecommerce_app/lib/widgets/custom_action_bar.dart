@@ -72,11 +72,12 @@ class CustomActionBar extends StatelessWidget {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                  color: Constants.btnColor,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    Constants.boxShadow,
-                  ]),
+                color: Constants.btnColor,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  Constants.boxShadow,
+                ],
+              ),
               child: StreamBuilder<QuerySnapshot>(
                 stream: _userRef,
                 builder: (context, snapshot) {

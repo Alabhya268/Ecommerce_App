@@ -394,44 +394,41 @@ class _ProductPageState extends State<ProductPage> {
                                     return Column(
                                       children: [
                                         ListTile(
-                                            title: Text(
-                                              '${comments.name}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            subtitle: Text(
-                                              '${comments.comment}',
-                                              style: TextStyle(
+                                          title: Text(
+                                            '${comments.name}',
+                                            style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
-                                              ),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          subtitle: Text(
+                                            '${comments.comment}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
                                             ),
-                                            trailing: comments.uid ==
-                                                    _firebaseServices
-                                                        .getUserId()
-                                                ? IconButton(
-                                                    icon: Icon(
-                                                      Icons.edit_outlined,
-                                                      color: Colors.white,
-                                                    ),
-                                                    onPressed: () {
-                                                      _updateCommentDialog(
-                                                          commentData.id,
-                                                          comments.comment);
-                                                    })
-                                                : null,
-                                            onLongPress: () async {
-                                              if (comments.uid ==
-                                                      _firebaseServices
-                                                          .getUserId()) {
-                                                            await _deleteComment(
-                                                      commentData.id);
-                                              }
-                                              
-                                                   
-                                            },),
+                                          ),
+                                          trailing: comments.uid ==
+                                                  _firebaseServices.getUserId()
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.edit_outlined,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    _updateCommentDialog(
+                                                        commentData.id,
+                                                        comments.comment);
+                                                  })
+                                              : null,
+                                          onLongPress: () async {
+                                            if (comments.uid ==
+                                                _firebaseServices.getUserId()) {
+                                              await _deleteComment(
+                                                  commentData.id);
+                                            }
+                                          },
+                                        ),
                                         Divider(
                                           thickness: 0.5,
                                           color: Colors.white,

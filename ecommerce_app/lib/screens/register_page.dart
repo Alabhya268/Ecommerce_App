@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/email_verfication_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
@@ -47,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     String _createAccountFeedback = await _firebaseServices.createAccount(
+      name: _name,
       email: _registerEmail,
       password: _registerPassword,
     );
@@ -64,6 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String _registerEmail = '';
   String _registerPassword = '';
+  String _name = '';
 
   FocusNode _passwordFocusNode;
 
@@ -81,64 +84,69 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 24),
-                child: Text(
-                  'Create A New Account',
-                  textAlign: TextAlign.center,
-                  style: Constants.boldHeading,
-                ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: ListView(
+          shrinkWrap: false,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 24),
+              child: Text(
+                'Create A New Account',
+                textAlign: TextAlign.center,
+                style: Constants.boldHeading,
               ),
-              Column(
-                children: [
-                  CustomInput(
-                    textInputType: TextInputType.emailAddress,
-                    hintText: 'Email...',
-                    textInputAction: TextInputAction.next,
-                    onChanged: (value) {
-                      _registerEmail = value;
-                    },
-                  ),
-                  CustomInput(
-                    textInputType: TextInputType.emailAddress,
-                    hintText: 'Password...',
-                    textInputAction: TextInputAction.next,
-                    isPasswordFeild: true,
-                    onChanged: (value) {
-                      _registerPassword = value;
-                    },
-                  ),
-                  CustomBtn(
-                    text: 'Create New Account',
-                    onPressed: () {
-                      _submitForm();
-                    },
-                    isLoading: _registerFormLoading,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 16,
-                ),
-                child: CustomBtn(
-                  outlineBtn: true,
-                  text: 'Already have an account?',
-                  onPressed: () {
-                    Navigator.pop(context);
+            ),
+            Column(
+              children: [
+                CustomInput(
+                  textInputType: TextInputType.name,
+                  hintText: 'Name...',
+                  textInputAction: TextInputAction.next,
+                  onChanged: (value) {
+                    _name = value;
                   },
                 ),
+                CustomInput(
+                  textInputType: TextInputType.emailAddress,
+                  hintText: 'Email...',
+                  textInputAction: TextInputAction.next,
+                  onChanged: (value) {
+                    _registerEmail = value;
+                  },
+                ),
+                CustomInput(
+                  textInputType: TextInputType.emailAddress,
+                  hintText: 'Password...',
+                  textInputAction: TextInputAction.next,
+                  isPasswordFeild: true,
+                  onChanged: (value) {
+                    _registerPassword = value;
+                  },
+                ),
+                CustomBtn(
+                  text: 'Create New Account',
+                  onPressed: () {
+                    _submitForm();
+                  },
+                  isLoading: _registerFormLoading,
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 16,
               ),
-            ],
-          ),
+              child: CustomBtn(
+                outlineBtn: true,
+                text: 'Already have an account?',
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

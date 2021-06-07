@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/email_verfication_page.dart';
 import 'package:ecommerce_app/screens/home_page.dart';
 import 'package:ecommerce_app/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +25,7 @@ class LandingPage extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
+            stream: FirebaseAuth.instance.userChanges(),
             builder: (context, streamsnapshot) {
               if (streamsnapshot.hasError) {
                 return Scaffold(
@@ -40,8 +41,12 @@ class LandingPage extends StatelessWidget {
                 User _user = streamsnapshot.data;
                 if (_user == null) {
                   return LoginPage();
-                } else {
-                  return HomePage();
+                } else if (_user != null) {
+                  if (_user.emailVerified) {
+                    return HomePage();
+                  } else {
+                    return EmailVerfication();
+                  } 
                 }
               }
 

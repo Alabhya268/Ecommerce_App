@@ -26,16 +26,18 @@ class _ProductSizeState extends State<ProductSize> {
               GestureDetector(
                 onTap: () {
                   widget.onSelected('${widget.productSize[i]}');
-                  setState(() {
-                    _selected = i;
-                  });
+                  setState(
+                    () {
+                      _selected = i;
+                    },
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   margin: EdgeInsets.symmetric(horizontal: 4),
                   alignment: Alignment.center,
                   constraints: BoxConstraints(
-                    minWidth: 42 
+                    minWidth: 42,
                   ),
                   height: 42,
                   decoration: BoxDecoration(

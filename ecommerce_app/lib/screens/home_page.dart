@@ -54,10 +54,13 @@ class _HomePageState extends State<HomePage> {
             child: BottomTabs(
               selectedTab: _selectedTab,
               tabPressed: (num) {
-                setState(() {
-                  _tabPageController.animateToPage(num,
-                      duration: Duration(microseconds: 1), curve: Curves.ease);
-                });
+                setState(
+                  () {
+                    _tabPageController.animateToPage(num,
+                        duration: Duration(microseconds: 1),
+                        curve: Curves.ease);
+                  },
+                );
               },
             ),
           )

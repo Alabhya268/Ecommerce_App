@@ -78,76 +78,72 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 24),
-                child: Text(
-                  'Welcome User,\nLogin to your account',
-                  textAlign: TextAlign.center,
-                  style: Constants.boldHeading,
-                ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: ListView(
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 24),
+              child: Text(
+                'Welcome User,\nLogin to your account',
+                textAlign: TextAlign.center,
+                style: Constants.boldHeading,
               ),
-              Column(
-                children: [
-                  CustomInput(
-                    textInputType: TextInputType.emailAddress,
-                    hintText: 'Email...',
-                    onChanged: (value) {
-                      _registerEmail = value;
-                    },
-                    onSubmitted: (value) {
-                      _passwordFocusNode.requestFocus();
-                    },
-                    textInputAction: TextInputAction.next,
-                  ),
-                  CustomInput(
-                    isPasswordFeild: true,
-                    hintText: 'Password...',
-                    onChanged: (value) {
-                      _registerPassword = value;
-                    },
-                    focusNode: _passwordFocusNode,
-                    onSubmitted: (value) {
-                      _submitForm();
-                    },
-                  ),
-                  CustomBtn(
-                    text: 'Login',
-                    onPressed: () {
-                      _submitForm();
-                    },
-                    isLoading: _registerFormLoading,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: 16,
+            ),
+            Column(
+              children: [
+                CustomInput(
+                  textInputType: TextInputType.emailAddress,
+                  hintText: 'Email...',
+                  onChanged: (value) {
+                    _registerEmail = value;
+                  },
+                  onSubmitted: (value) {
+                    _passwordFocusNode.requestFocus();
+                  },
+                  textInputAction: TextInputAction.next,
                 ),
-                child: CustomBtn(
-                  outlineBtn: true,
-                  text: 'Create New Account',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return RegisterPage();
-                        },
-                      ),
-                    );
+                CustomInput(
+                  isPasswordFeild: true,
+                  hintText: 'Password...',
+                  onChanged: (value) {
+                    _registerPassword = value;
+                  },
+                  focusNode: _passwordFocusNode,
+                  onSubmitted: (value) {
+                    _submitForm();
                   },
                 ),
+                CustomBtn(
+                  text: 'Login',
+                  onPressed: () {
+                    _submitForm();
+                  },
+                  isLoading: _registerFormLoading,
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 16,
               ),
-            ],
-          ),
+              child: CustomBtn(
+                outlineBtn: true,
+                text: 'Create New Account',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return RegisterPage();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
