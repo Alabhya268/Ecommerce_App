@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  static String title = 'Ecommerce app';
+
   static TextStyle regularHeading = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
@@ -19,10 +21,33 @@ class Constants {
     color: Colors.white,
   );
 
-  static TextStyle regularDarkText = TextStyle(
+  static TextStyle regularDark = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: Colors.white,
+  );
+
+  static TextStyle homeProductCardPrice = TextStyle(
+    fontSize: 16,
+    color: Color(0xFFFF1E00),
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle cartProductCardPrice = TextStyle(
+    fontSize: 16,
+    color: Color(0xFFFF1E00),
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle cartProductCardSize = TextStyle(
+    fontSize: 18,
+    color: Colors.white,
+  );
+
+  static CircularProgressIndicator regularProgressIndicator =
+      CircularProgressIndicator(
+    backgroundColor: Colors.white,
+    color: Color(0xFFFF1E00),
   );
 
   static BoxShadow boxShadow = BoxShadow(

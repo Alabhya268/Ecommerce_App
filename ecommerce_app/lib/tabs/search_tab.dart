@@ -25,7 +25,7 @@ class _SearchTabState extends State<SearchTab> {
           Center(
             child: Text(
               'Search Results',
-              style: Constants.regularDarkText,
+              style: Constants.regularDark,
             ),
           )
         else
@@ -104,11 +104,7 @@ class _SearchTabState extends State<SearchTab> {
                                   ),
                                   Text(
                                     "\$${product.price}" ?? 'Price',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Theme.of(context).accentColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: Constants.homeProductCardPrice,
                                   ),
                                 ],
                               ),
@@ -123,11 +119,10 @@ class _SearchTabState extends State<SearchTab> {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).accentColor,
-                  ),
+                  child: Constants.regularProgressIndicator,
                 );
               }
+              return null;
             },
           ),
         Container(

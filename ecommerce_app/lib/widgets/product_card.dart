@@ -76,21 +76,17 @@ class ProductCard extends StatelessWidget {
                                 Text(
                                   '${_productMap.name}',
                                   softWrap: false,
-                                  style: Constants.regularDarkText,
+                                  style: Constants.regularDark,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
                                   '\$${_productMap.price}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Theme.of(context).accentColor,
-                                  ),
+                                  style: Constants.cartProductCardPrice,
                                 ),
                                 if (document.data()['size'] != null)
                                   Text(
                                     'Size - ${document.data()['size']}',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
+                                    style: Constants.cartProductCardSize,
                                   ),
                               ],
                             ),

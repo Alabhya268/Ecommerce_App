@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
@@ -51,11 +52,10 @@ class SavedTab extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).accentColor,
-                  ),
+                  child: Constants.regularProgressIndicator,
                 );
               }
+              return null;
             },
           ),
           CustomActionBar(

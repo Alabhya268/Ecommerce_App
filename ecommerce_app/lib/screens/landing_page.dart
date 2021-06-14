@@ -10,65 +10,67 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                'Error: ${snapshot.error}',
+    return SafeArea(
+      child: FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
+                ),
               ),
-            ),
-          );
-        }
+            );
+          }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          return StreamBuilder(
-            stream: FirebaseAuth.instance.userChanges(),
-            builder: (context, streamsnapshot) {
-              if (streamsnapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return StreamBuilder(
+              stream: FirebaseAuth.instance.userChanges(),
+              builder: (context, streamsnapshot) {
+                if (streamsnapshot.hasError) {
+                  return Scaffold(
+                    body: Center(
+                      child: Text(
+                        'Error: ${streamsnapshot.error}',
+                      ),
+                    ),
+                  );
+                }
+
+                if (streamsnapshot.connectionState == ConnectionState.active) {
+                  User _user = streamsnapshot.data;
+                  if (_user == null) {
+                    return LoginPage();
+                  } else if (_user != null) {
+                    if (_user.emailVerified) {
+                      return HomePage();
+                    } else {
+                      return EmailVerfication();
+                    }
+                  }
+                }
+
                 return Scaffold(
                   body: Center(
                     child: Text(
-                      'Error: ${streamsnapshot.error}',
+                      'Checking Authentication...',
                     ),
                   ),
                 );
-              }
+              },
+            );
+          }
 
-              if (streamsnapshot.connectionState == ConnectionState.active) {
-                User _user = streamsnapshot.data;
-                if (_user == null) {
-                  return LoginPage();
-                } else if (_user != null) {
-                  if (_user.emailVerified) {
-                    return HomePage();
-                  } else {
-                    return EmailVerfication();
-                  } 
-                }
-              }
-
-              return Scaffold(
-                body: Center(
-                  child: Text(
-                    'Checking Authentication...',
-                  ),
-                ),
-              );
-            },
-          );
-        }
-
-        return Scaffold(
-          body: Center(
-            child: Text(
-              'initialization App...',
+          return Scaffold(
+            body: Center(
+              child: Text(
+                'initialization App...',
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

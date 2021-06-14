@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class CustomInput extends StatelessWidget {
   final String hintText;
   final Function(String) onChanged;
-  final Function(String) onSubmitted;
+  final Function(String) onFieldSubmitted;
+  final Function(String) validator;
   final FocusNode focusNode;
   final TextInputAction textInputAction;
   final bool isPasswordFeild;
@@ -12,18 +13,19 @@ class CustomInput extends StatelessWidget {
   final double horizontalPadding;
   final TextEditingController textEditingController;
 
-  const CustomInput(
-      {Key key,
-      this.hintText,
-      this.onChanged,
-      this.onSubmitted,
-      this.focusNode,
-      this.textInputAction,
-      this.isPasswordFeild,
-      this.textInputType,
-      this.horizontalPadding,
-      this.textEditingController})
-      : super(key: key);
+  const CustomInput({
+    Key key,
+    this.hintText,
+    this.onChanged,
+    this.onFieldSubmitted,
+    this.focusNode,
+    this.textInputAction,
+    this.isPasswordFeild,
+    this.textInputType,
+    this.horizontalPadding,
+    this.textEditingController,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +40,14 @@ class CustomInput extends StatelessWidget {
           0xFF323232,
         ),
       ),
-      child: TextField(
+      child: TextFormField(
         controller: textEditingController,
         keyboardType: textInputType,
         obscureText: isPasswordFeild ?? false,
         focusNode: focusNode,
         onChanged: onChanged,
-        onSubmitted: onSubmitted,
+        validator: validator,
+        onFieldSubmitted: onFieldSubmitted,
         textInputAction: textInputAction,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
@@ -54,7 +57,7 @@ class CustomInput extends StatelessWidget {
           border: InputBorder.none,
           hintText: hintText ?? 'Hint Text...',
         ),
-        style: Constants.regularDarkText,
+        style: Constants.regularDark,
       ),
     );
   }

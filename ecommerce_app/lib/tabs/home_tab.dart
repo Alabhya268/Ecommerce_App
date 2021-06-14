@@ -76,11 +76,7 @@ class HomeTab extends StatelessWidget {
                                   const EdgeInsets.only(left: 8.0, top: 8.0),
                               child: Text(
                                 "\$${product.price}" ?? 'Price',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Constants.homeProductCardPrice,
                               ),
                             ),
                             Padding(
@@ -104,9 +100,7 @@ class HomeTab extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).accentColor,
-                  ),
+                  child: Constants.regularProgressIndicator,
                 );
               }
               return null;

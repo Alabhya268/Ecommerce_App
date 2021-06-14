@@ -3,14 +3,14 @@ import 'package:ecommerce_app/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseServices {
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   String getUserId() {
-    return _firebaseAuth.currentUser.uid;
+    return firebaseAuth.currentUser.uid;
   }
 
   User getCurrentUser() {
-    return _firebaseAuth.currentUser;
+    return firebaseAuth.currentUser;
   }
 
   final CollectionReference commentRef =
@@ -72,5 +72,21 @@ class FirebaseServices {
     } catch (e) {
       return (e.toString());
     }
+  }
+
+  Future<bool> emailExist(String email) async {
+    bool isEmailExist = false;
+    await usersRef.where('email', isEqualTo: email).get().then(
+      (value) {
+        if (value.docs.first.exists) {
+          isEmailExist = true;
+        }
+      },
+    ).onError(
+      (error, stackTrace) {
+        isEmailExist = false;
+      },
+    );
+    return isEmailExist;
   }
 }

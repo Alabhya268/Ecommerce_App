@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/screens/email_verfication_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
+import 'package:ecommerce_app/widgets/password_visibility_checkbox.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -13,6 +13,8 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   FirebaseServices _firebaseServices = new FirebaseServices();
+
+  bool _passwordVisibility = false;
 
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
@@ -84,70 +86,81 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: ListView(
-          shrinkWrap: false,
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 24),
-              child: Text(
-                'Create A New Account',
-                textAlign: TextAlign.center,
-                style: Constants.boldHeading,
-              ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: ListView(
+        shrinkWrap: false,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            child: Text(
+              'Create A New Account',
+              textAlign: TextAlign.center,
+              style: Constants.boldHeading,
             ),
-            Column(
-              children: [
-                CustomInput(
-                  textInputType: TextInputType.name,
-                  hintText: 'Name...',
-                  textInputAction: TextInputAction.next,
-                  onChanged: (value) {
-                    _name = value;
-                  },
-                ),
-                CustomInput(
-                  textInputType: TextInputType.emailAddress,
-                  hintText: 'Email...',
-                  textInputAction: TextInputAction.next,
-                  onChanged: (value) {
-                    _registerEmail = value;
-                  },
-                ),
-                CustomInput(
-                  textInputType: TextInputType.emailAddress,
-                  hintText: 'Password...',
-                  textInputAction: TextInputAction.next,
-                  isPasswordFeild: true,
-                  onChanged: (value) {
-                    _registerPassword = value;
-                  },
-                ),
-                CustomBtn(
-                  text: 'Create New Account',
-                  onPressed: () {
-                    _submitForm();
-                  },
-                  isLoading: _registerFormLoading,
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 16,
-              ),
-              child: CustomBtn(
-                outlineBtn: true,
-                text: 'Already have an account?',
-                onPressed: () {
-                  Navigator.pop(context);
+          ),
+          Column(
+            children: [
+              CustomInput(
+                textInputType: TextInputType.name,
+                hintText: 'Name...',
+                textInputAction: TextInputAction.next,
+                onChanged: (value) {
+                  _name = value;
                 },
               ),
+              CustomInput(
+                textInputType: TextInputType.emailAddress,
+                hintText: 'Email...',
+                textInputAction: TextInputAction.next,
+                onChanged: (value) {
+                  _registerEmail = value;
+                },
+              ),
+              CustomInput(
+                textInputType: TextInputType.emailAddress,
+                hintText: 'Password...',
+                textInputAction: TextInputAction.next,
+                isPasswordFeild: !_passwordVisibility,
+                onChanged: (value) {
+                  _registerPassword = value;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: PasswordVisibilityCheckBox(
+                  (value) {
+                    setState(
+                      () {
+                        _passwordVisibility = value;
+                      },
+                    );
+                  },
+                  _passwordVisibility,
+                ),
+              ),
+              CustomBtn(
+                text: 'Create New Account',
+                onPressed: () {
+                  _submitForm();
+                },
+                isLoading: _registerFormLoading,
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 16,
             ),
-          ],
-        ),
+            child: CustomBtn(
+              outlineBtn: true,
+              text: 'Already have an account?',
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -20,7 +20,7 @@ class _EmailVerficationState extends State<EmailVerfication> {
   @override
   void initState() {
     user = _firebaseServices.getCurrentUser();
-    
+
     user.sendEmailVerification();
     timer = Timer.periodic(
       Duration(seconds: 1),
@@ -51,7 +51,8 @@ class _EmailVerficationState extends State<EmailVerfication> {
       body: Center(
           child: Text(
         'An email has been sent to ${user.email}, please verify.',
-        style: Constants.regularDarkText,
+        style: Constants.regularDark,
+        textAlign: TextAlign.center,
       )),
     );
   }

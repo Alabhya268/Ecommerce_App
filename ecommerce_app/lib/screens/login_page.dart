@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/screens/register_page.dart';
+import 'package:ecommerce_app/screens/reset_password_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
+import 'package:ecommerce_app/widgets/password_visibility_checkbox.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -13,6 +15,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   FirebaseServices _firebaseServices = new FirebaseServices();
+
+  bool _passwordVisibility = false;
 
   Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
@@ -78,73 +82,104 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 24),
-              child: Text(
-                'Welcome User,\nLogin to your account',
-                textAlign: TextAlign.center,
-                style: Constants.boldHeading,
-              ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            child: Text(
+              'Welcome User,\nLogin to your account',
+              textAlign: TextAlign.center,
+              style: Constants.boldHeading,
             ),
-            Column(
-              children: [
-                CustomInput(
-                  textInputType: TextInputType.emailAddress,
-                  hintText: 'Email...',
-                  onChanged: (value) {
-                    _registerEmail = value;
-                  },
-                  onSubmitted: (value) {
-                    _passwordFocusNode.requestFocus();
-                  },
-                  textInputAction: TextInputAction.next,
-                ),
-                CustomInput(
-                  isPasswordFeild: true,
-                  hintText: 'Password...',
-                  onChanged: (value) {
-                    _registerPassword = value;
-                  },
-                  focusNode: _passwordFocusNode,
-                  onSubmitted: (value) {
-                    _submitForm();
-                  },
-                ),
-                CustomBtn(
-                  text: 'Login',
-                  onPressed: () {
-                    _submitForm();
-                  },
-                  isLoading: _registerFormLoading,
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 16,
+          ),
+          Column(
+            children: [
+              CustomInput(
+                textInputType: TextInputType.emailAddress,
+                hintText: 'Email...',
+                onChanged: (value) {
+                  _registerEmail = value;
+                },
+                onFieldSubmitted: (value) {
+                  _passwordFocusNode.requestFocus();
+                },
+                textInputAction: TextInputAction.next,
               ),
-              child: CustomBtn(
-                outlineBtn: true,
-                text: 'Create New Account',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return RegisterPage();
-                      },
-                    ),
-                  );
+              CustomInput(
+                isPasswordFeild: !_passwordVisibility,
+                hintText: 'Password...',
+                onChanged: (value) {
+                  _registerPassword = value;
+                },
+                focusNode: _passwordFocusNode,
+                onFieldSubmitted: (value) {
+                  _submitForm();
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PasswordVisibilityCheckBox((value) {
+                      setState(
+                        () {
+                          _passwordVisibility = value;
+                        },
+                      );
+                    }, _passwordVisibility),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return ResetPassword();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forget Password ?',
+                        style: Constants.homeProductCardPrice,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              CustomBtn(
+                text: 'Login',
+                onPressed: () {
+                  _submitForm();
+                },
+                isLoading: _registerFormLoading,
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 16,
             ),
-          ],
-        ),
+            child: CustomBtn(
+              outlineBtn: true,
+              text: 'Create New Account',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return RegisterPage();
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

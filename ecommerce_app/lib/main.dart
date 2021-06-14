@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/landing_page.dart';
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: Constants.title,
       theme: ThemeData(
         backgroundColor: Color(0xFF121212),
         accentColor: Color(0xFFFF1E00),

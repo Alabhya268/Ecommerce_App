@@ -233,9 +233,10 @@ class _ProductPageState extends State<ProductPage> {
                       child: Text(
                         '\$${documentData.price}' ?? 'Price',
                         style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.red,
-                            fontSize: 18),
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                     Padding(
@@ -255,7 +256,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       child: Text(
                         'Select Size',
-                        style: Constants.regularDarkText,
+                        style: Constants.regularDark,
                       ),
                     ),
                     ProductSize(
@@ -356,7 +357,7 @@ class _ProductPageState extends State<ProductPage> {
                       onChanged: (value) {
                         _comment = value;
                       },
-                      onSubmitted: (value) {
+                      onFieldSubmitted: (value) {
                         _addToComment();
                         setState(() {
                           _comment = "";
@@ -447,9 +448,7 @@ class _ProductPageState extends State<ProductPage> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor: Theme.of(context).accentColor,
-                            ),
+                            child: Constants.regularProgressIndicator,
                           );
                         }
                         return null;
@@ -461,9 +460,7 @@ class _ProductPageState extends State<ProductPage> {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).accentColor,
-                  ),
+                  child: Constants.regularProgressIndicator,
                 );
               }
               return null;
