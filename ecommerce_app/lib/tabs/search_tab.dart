@@ -47,7 +47,7 @@ class _SearchTabState extends State<SearchTab> {
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 84 + MediaQuery.of(context).padding.top,
+                    top: 70 + MediaQuery.of(context).padding.top,
                   ),
                   children: snapshot.data.docs.map((document) {
                     Product product = Product.fromData(document.data());
@@ -125,27 +125,15 @@ class _SearchTabState extends State<SearchTab> {
               return null;
             },
           ),
-        Container(
-          padding: const EdgeInsets.only(
-            top: 45,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(12),
-              bottomRight: Radius.circular(12),
-            ),
-          ),
-          child: CustomInput(
-            horizontalPadding: 12.0,
+          CustomInput(
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             hintText: 'Search here...',
             onChanged: (value) {
               setState(() {
                 _searchString = value;
               });
             },
-          ),
-        ),
+          )
       ],
     );
   }

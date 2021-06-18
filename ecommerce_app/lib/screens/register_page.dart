@@ -140,6 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               CustomBtn(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 text: 'Create New Account',
                 onPressed: () {
                   _submitForm();
@@ -148,17 +149,13 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 16,
-            ),
-            child: CustomBtn(
-              outlineBtn: true,
-              text: 'Already have an account?',
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+          CustomBtn(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            outlineBtn: true,
+            text: 'Already have an account?',
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ],
       ),

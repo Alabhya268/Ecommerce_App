@@ -118,21 +118,19 @@ class _LoginPageState extends State<LoginPage> {
                   _submitForm();
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PasswordVisibilityCheckBox((value) {
-                      setState(
-                        () {
-                          _passwordVisibility = value;
-                        },
-                      );
-                    }, _passwordVisibility),
-                    TextButton(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  PasswordVisibilityCheckBox((value) {
+                    setState(
+                      () {
+                        _passwordVisibility = value;
+                      },
+                    );
+                  }, _passwordVisibility),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -148,10 +146,14 @@ class _LoginPageState extends State<LoginPage> {
                         style: Constants.homeProductCardPrice,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               CustomBtn(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 12
+                ),
                 text: 'Login',
                 onPressed: () {
                   _submitForm();
@@ -160,24 +162,23 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 16,
+          CustomBtn(
+            padding: EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 12,
             ),
-            child: CustomBtn(
-              outlineBtn: true,
-              text: 'Create New Account',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return RegisterPage();
-                    },
-                  ),
-                );
-              },
-            ),
+            outlineBtn: true,
+            text: 'Create New Account',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return RegisterPage();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -320,7 +320,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ),
                     CustomBtn(
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.only(bottom: 12, left: 24, right: 24),
                       text: 'Buy Now',
                     ),
                     Padding(

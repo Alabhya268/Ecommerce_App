@@ -42,6 +42,7 @@ class ResetPassword extends StatelessWidget {
             },
           ),
           CustomBtn(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             text: 'Continue',
             onPressed: () async {
               await _firebaseServices.emailExist(_email)
@@ -68,6 +69,7 @@ class ResetPassword extends StatelessWidget {
             },
           ),
           CustomBtn(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             text: 'Back',
             onPressed: () {
               Navigator.pop(context);
