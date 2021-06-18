@@ -6,15 +6,18 @@ class CustomBtn extends StatelessWidget {
   final Function onPressed;
   final bool outlineBtn;
   final bool isLoading;
-  final double padding;
+  final EdgeInsets padding;
+  final double width;
 
-  const CustomBtn(
-      {Key key,
-      this.text,
-      this.onPressed,
-      this.outlineBtn,
-      this.isLoading,
-      this.padding});
+  const CustomBtn({
+    Key key,
+    this.text,
+    this.onPressed,
+    this.outlineBtn,
+    this.isLoading,
+    this.width,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,8 @@ class CustomBtn extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         height: 65,
-        margin: EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: padding ?? 24,
-        ),
+        width: width,
+        margin: padding,
         decoration: BoxDecoration(
           color: Constants.btnColor,
           borderRadius: BorderRadius.circular(12),

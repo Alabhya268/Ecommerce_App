@@ -6,6 +6,8 @@ import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/models/saved.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/widgets/custom_action_bar.dart';
+import 'package:ecommerce_app/widgets/custom_btn.dart';
+import 'package:ecommerce_app/widgets/custom_icon_btn.dart';
 import 'package:ecommerce_app/widgets/custom_input.dart';
 import 'package:ecommerce_app/widgets/image_swipe.dart';
 import 'package:ecommerce_app/widgets/product_size.dart';
@@ -266,83 +268,60 @@ class _ProductPageState extends State<ProductPage> {
                       productSize: productSizes,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 24),
                       child: Row(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              _addToSaved().then((value) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Product Saved'),
-                                    duration: Duration(
-                                      seconds: 1,
-                                    ),
-                                  ),
-                                );
-                              });
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(right: 16),
-                              height: 65,
-                              width: 65,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 2.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(2.0, 2.0),
-                                  ),
-                                ],
-                                color: Color(0xFF1D1D1D),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.bookmark_border_outlined,
-                                color: Colors.white70,
-                                size: 30,
-                              ),
+                          CustomIconBtn(
+                            margin: EdgeInsets.only(right: 16),
+                            icon: Icon(
+                              Icons.bookmark_border_outlined,
+                              color: Colors.white70,
+                              size: 30,
                             ),
+                            onPressed: () {
+                              _addToSaved().whenComplete(
+                                () {
+                                  {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Product Saved'),
+                                        duration: Duration(
+                                          seconds: 1,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                              );
+                            },
                           ),
                           Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                _addToCart().then((value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Product added to cart'),
-                                      duration: Duration(
-                                        seconds: 1,
-                                      ),
-                                    ),
+                            child: CustomBtn(
+                                text: 'Add to cart',
+                                onPressed: () {
+                                  _addToCart().then(
+                                    (value) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content:
+                                              Text('Product added to cart'),
+                                          duration: Duration(
+                                            seconds: 1,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   );
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 65,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF1E1E1E),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    Constants.boxShadow,
-                                  ],
-                                ),
-                                child: Text(
-                                  'Add to Cart',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                }),
                           ),
                         ],
                       ),
+                    ),
+                    CustomBtn(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      text: 'Buy Now',
                     ),
                     Padding(
                       padding: const EdgeInsets.only(

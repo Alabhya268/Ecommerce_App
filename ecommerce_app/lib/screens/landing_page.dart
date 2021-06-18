@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/screens/email_verfication_page.dart';
 import 'package:ecommerce_app/screens/home_page.dart';
 import 'package:ecommerce_app/screens/login_page.dart';
@@ -52,10 +53,9 @@ class LandingPage extends StatelessWidget {
                 }
 
                 return Scaffold(
+                  backgroundColor: Theme.of(context).backgroundColor,
                   body: Center(
-                    child: Text(
-                      'Checking Authentication...',
-                    ),
+                    child: Constants.regularProgressIndicator,
                   ),
                 );
               },

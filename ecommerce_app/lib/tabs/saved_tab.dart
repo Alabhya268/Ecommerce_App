@@ -10,6 +10,7 @@ class SavedTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
       child: Stack(
         children: [
@@ -32,7 +33,7 @@ class SavedTab extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.active) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 100,
+                    top: 70 + statusBarHeight,
                     bottom: 12,
                   ),
                   children: snapshot.data.docs.map(
