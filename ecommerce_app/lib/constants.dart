@@ -27,6 +27,11 @@ class Constants {
     color: Colors.white,
   );
 
+  static TextStyle regularDarkLight = TextStyle(
+    fontSize: 16,
+    color: Colors.white,
+  );
+
   static TextStyle homeProductCardPrice = TextStyle(
     fontSize: 16,
     color: Color(0xFFFF1E00),
@@ -56,6 +61,8 @@ class Constants {
     spreadRadius: 0.0,
     offset: Offset(2.0, 2.0),
   );
+
+  static Color customColorOne = Color(0xFF1F1F1F);
 
   static Color btnColor = Color(0xFF1D1D1D);
 }

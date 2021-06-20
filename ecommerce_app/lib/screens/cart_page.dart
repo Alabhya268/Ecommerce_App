@@ -37,7 +37,7 @@ class _CartPageState extends State<CartPage> {
               if (snapshot.connectionState == ConnectionState.active) {
                 return ListView(
                   padding: EdgeInsets.only(
-                    top: 70 + statusBarHeight,
+                    top: 72 + statusBarHeight,
                     bottom: 12,
                   ),
                   children: snapshot.data.docs.map(
@@ -66,7 +66,6 @@ class _CartPageState extends State<CartPage> {
           CustomActionBar(
             hasBackArrow: true,
             title: 'Cart',
-            uid: _firebaseServices.getUserId(),
           ),
         ],
       ),

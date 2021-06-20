@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/screens/cart_page.dart';
+import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
 class CustomActionBar extends StatelessWidget {
   final String title;
   final bool hasBackArrow;
   final bool hasTitle;
-  final String uid;
 
-  const CustomActionBar(
-      {Key key, this.title, this.hasBackArrow, this.hasTitle, this.uid})
-      : super(key: key);
+  FirebaseServices _firebaseServices = FirebaseServices();
+
+  CustomActionBar({Key key, this.title, this.hasBackArrow, this.hasTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CustomActionBar extends StatelessWidget {
 
     Stream<QuerySnapshot> _userRef = FirebaseFirestore.instance
         .collection('Cart')
-        .where('uid', isEqualTo: uid)
+        .where('uid', isEqualTo: _firebaseServices.getCurrentUser().uid)
         .snapshots();
 
     return Container(
@@ -44,7 +44,7 @@ class CustomActionBar extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF1F1F1F),
+                  color: Constants.customColorOne,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,

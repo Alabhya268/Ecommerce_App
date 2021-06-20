@@ -11,60 +11,57 @@ class SavedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-    return Container(
-      child: Stack(
-        children: [
-          StreamBuilder<QuerySnapshot>(
-            stream: _firebaseServices.savedRef
-                .where(
-                  'uid',
-                  isEqualTo: _firebaseServices.getUserId(),
-                )
-                .orderBy('datetime', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Container(
-                    child: Text('${snapshot.error}'),
-                  ),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.active) {
-                return ListView(
-                  padding: EdgeInsets.only(
-                    top: 70 + statusBarHeight,
-                    bottom: 12,
-                  ),
-                  children: snapshot.data.docs.map(
-                    (document) {
-                      return ProductCard(
-                        document: document,
-                        onPressed: () {
-                          _firebaseServices.savedRef
-                              .doc('${document.id}')
-                              .delete();
-                        },
-                      );
-                    },
-                  ).toList(),
-                );
-              }
+    return Stack(
+      children: [
+        StreamBuilder<QuerySnapshot>(
+          stream: _firebaseServices.savedRef
+              .where(
+                'uid',
+                isEqualTo: _firebaseServices.getUserId(),
+              )
+              .orderBy('datetime', descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Container(
+                  child: Text('${snapshot.error}'),
+                ),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.active) {
+              return ListView(
+                padding: EdgeInsets.only(
+                  top: 72 + statusBarHeight,
+                  bottom: 12,
+                ),
+                children: snapshot.data.docs.map(
+                  (document) {
+                    return ProductCard(
+                      document: document,
+                      onPressed: () {
+                        _firebaseServices.savedRef
+                            .doc('${document.id}')
+                            .delete();
+                      },
+                    );
+                  },
+                ).toList(),
+              );
+            }
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Constants.regularProgressIndicator,
-                );
-              }
-              return null;
-            },
-          ),
-          CustomActionBar(
-            title: 'Saved',
-            uid: _firebaseServices.getUserId(),
-          ),
-        ],
-      ),
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Constants.regularProgressIndicator,
+              );
+            }
+            return null;
+          },
+        ),
+        CustomActionBar(
+          title: 'Saved',
+        ),
+      ],
     );
   }
 }

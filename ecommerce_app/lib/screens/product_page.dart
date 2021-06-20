@@ -218,8 +218,8 @@ class _ProductPageState extends State<ProductPage> {
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 24,
-                        left: 24,
-                        right: 24,
+                        left: 12,
+                        right: 12,
                         bottom: 4,
                       ),
                       child: Text(
@@ -230,7 +230,7 @@ class _ProductPageState extends State<ProductPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 4,
-                        horizontal: 24,
+                        horizontal: 12,
                       ),
                       child: Text(
                         '\$${documentData.price}' ?? 'Price',
@@ -244,7 +244,7 @@ class _ProductPageState extends State<ProductPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
-                        horizontal: 24,
+                        horizontal: 12,
                       ),
                       child: Text(
                         '${documentData.desc}' ?? 'Description',
@@ -254,7 +254,7 @@ class _ProductPageState extends State<ProductPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 24,
-                        horizontal: 24,
+                        horizontal: 12,
                       ),
                       child: Text(
                         'Select Size',
@@ -269,7 +269,7 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 24.0, vertical: 24),
+                          horizontal: 12, vertical: 24),
                       child: Row(
                         children: [
                           CustomIconBtn(
@@ -320,12 +320,12 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ),
                     CustomBtn(
-                      padding: EdgeInsets.only(bottom: 12, left: 24, right: 24),
+                      padding: EdgeInsets.only(bottom: 12, left: 12, right: 12),
                       text: 'Buy Now',
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 24, right: 24, bottom: 12),
+                          left: 12, right: 12, bottom: 12),
                       child: Text(
                         'Reviews',
                         style: Constants.boldHeading,
@@ -363,7 +363,6 @@ class _ProductPageState extends State<ProductPage> {
                               margin: EdgeInsets.symmetric(
                                 horizontal: 12,
                               ),
-                              decoration: BoxDecoration(),
                               child: ListView(
                                 padding: EdgeInsets.all(0),
                                 shrinkWrap: true,
@@ -376,17 +375,11 @@ class _ProductPageState extends State<ProductPage> {
                                         ListTile(
                                           title: Text(
                                             '${comments.name}',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                            style: Constants.regularDark,
                                           ),
                                           subtitle: Text(
                                             '${comments.comment}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                            ),
+                                            style: Constants.regularDarkLight,
                                           ),
                                           trailing: comments.uid ==
                                                   _firebaseServices.getUserId()
@@ -448,7 +441,6 @@ class _ProductPageState extends State<ProductPage> {
           CustomActionBar(
             hasBackArrow: true,
             hasTitle: false,
-            uid: _firebaseServices.getUserId(),
           ),
         ],
       ),

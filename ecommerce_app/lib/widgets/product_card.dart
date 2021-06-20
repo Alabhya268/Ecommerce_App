@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
+import 'package:ecommerce_app/models/cart.dart';
 import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/screens/product_page.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
@@ -43,9 +44,8 @@ class ProductCard extends StatelessWidget {
             Product _productMap = Product.fromData(productSnap.data.data());
             return Container(
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(
-                horizontal: 12,
-              ),
+              margin: EdgeInsets.only(bottom: 4),
+              padding: EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
                   12,
@@ -58,12 +58,17 @@ class ProductCard extends StatelessWidget {
                     flex: 1,
                     child: Row(
                       children: [
-                        Image.network(
-                          '${_productMap.images[0]}',
+                        Container(
                           width: 70,
                           height: 70,
-                          fit: BoxFit.fitHeight,
-                          filterQuality: FilterQuality.low,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              '${_productMap.images[0]}',
+                              fit: BoxFit.fitHeight,
+                              filterQuality: FilterQuality.low,
+                            ),
+                          ),
                         ),
                         Flexible(
                           flex: 1,
@@ -82,11 +87,13 @@ class ProductCard extends StatelessWidget {
                                 Text(
                                   '\$${_productMap.price}',
                                   style: Constants.cartProductCardPrice,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 if (document.data()['size'] != null)
                                   Text(
                                     'Size - ${document.data()['size']}',
                                     style: Constants.cartProductCardSize,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                               ],
                             ),

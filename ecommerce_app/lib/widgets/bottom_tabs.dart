@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +20,15 @@ class _BottomTabsState extends State<BottomTabs> {
   Widget build(BuildContext context) {
     _selectedTab = widget.selectedTab ?? 0;
     return Container(
-      decoration: BoxDecoration(color: Color(0xFF1F1F1F), boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.05),
-          spreadRadius: 1,
-        ),
-      ]),
+      decoration: BoxDecoration(
+        color: Constants.customColorOne,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -50,10 +54,10 @@ class _BottomTabsState extends State<BottomTabs> {
             },
           ),
           BottomTabBtn(
-            icon: Icons.logout,
+            icon: Icons.person_outline,
             selected: _selectedTab == 3 ? true : false,
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              widget.tabPressed(3);
             },
           ),
         ],
@@ -78,8 +82,8 @@ class BottomTabBtn extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(
-          vertical: 22,
-          horizontal: 22,
+          vertical: 16,
+          horizontal: 12,
         ),
         child: Icon(
           icon ?? Icons.home_outlined,

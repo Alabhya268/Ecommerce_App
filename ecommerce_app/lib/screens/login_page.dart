@@ -150,10 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               CustomBtn(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 text: 'Login',
                 onPressed: () {
                   _submitForm();

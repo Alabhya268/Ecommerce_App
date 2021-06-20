@@ -23,16 +23,18 @@ class CustomInput extends StatelessWidget {
     this.isPasswordFeild,
     this.textInputType,
     this.textEditingController,
-    this.validator, this.padding,
+    this.validator,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: padding ?? EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 12,
-      ),
+      margin: padding ??
+          EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 12,
+          ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Color(

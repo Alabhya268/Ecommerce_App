@@ -2,6 +2,7 @@ import 'package:ecommerce_app/services/firebase_services.dart';
 import 'package:ecommerce_app/tabs/home_tab.dart';
 import 'package:ecommerce_app/tabs/saved_tab.dart';
 import 'package:ecommerce_app/tabs/search_tab.dart';
+import 'package:ecommerce_app/tabs/user_tab.dart';
 import 'package:ecommerce_app/widgets/bottom_tabs.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
                 HomeTab(),
                 SearchTab(),
                 SavedTab(),
+                UserTab(),
               ],
             ),
           ),
