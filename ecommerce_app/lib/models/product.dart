@@ -5,13 +5,7 @@ class Product {
   int price;
   List<dynamic> size;
 
-  Product({
-    this.desc,
-    this.images,
-    this.name,
-    this.price,
-    this.size,
-  });
+  Product({this.desc, this.images, this.name, this.price, this.size});
 
   Product.fromData(Map<String, dynamic> data)
       : desc = data['desc'],

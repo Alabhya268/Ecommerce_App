@@ -4,6 +4,7 @@ import 'package:ecommerce_app/tabs/saved_tab.dart';
 import 'package:ecommerce_app/tabs/search_tab.dart';
 import 'package:ecommerce_app/tabs/user_tab.dart';
 import 'package:ecommerce_app/widgets/bottom_tabs.dart';
+import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +30,12 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  String tabName(int selectedTab) {
+    List<String> _tabNames = ['Home', 'Search', 'Saved', 'User'];
+
+    return _tabNames[selectedTab];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +43,9 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          CustomActionBar(
+            title: tabName(_selectedTab),
+          ),
           Expanded(
             child: PageView(
               controller: _tabPageController,

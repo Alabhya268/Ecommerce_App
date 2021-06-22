@@ -11,6 +11,8 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Stack(
       children: [
         FutureBuilder<QuerySnapshot>(
@@ -31,8 +33,7 @@ class HomeTab extends StatelessWidget {
                 childAspectRatio: 7.5 / 10,
                 shrinkWrap: true,
                 crossAxisCount: 2,
-                padding: EdgeInsets.only(
-                    top: 72 + MediaQuery.of(context).padding.top),
+                padding: EdgeInsets.only(top: 12 + statusBarHeight),
                 children: snapshot.data.docs.map((document) {
                   return HomeTabProductCard(document: document);
                 }).toList(),
@@ -46,10 +47,6 @@ class HomeTab extends StatelessWidget {
             }
             return null;
           },
-        ),
-        CustomActionBar(
-          title: 'Home',
-          hasBackArrow: false,
         ),
       ],
     );

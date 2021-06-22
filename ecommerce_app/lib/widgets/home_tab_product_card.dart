@@ -12,6 +12,13 @@ class HomeTabProductCard extends StatelessWidget {
 
   final QueryDocumentSnapshot document;
 
+  String allWordsCapitilize(String str) {
+    return str.toLowerCase().split(' ').map((word) {
+      String leftText = (word.length > 1) ? word.substring(1, word.length) : '';
+      return word[0].toUpperCase() + leftText;
+    }).join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     Product product = Product.fromData(document.data());
@@ -57,7 +64,7 @@ class HomeTabProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 8.0),
               child: Text(
-                product.name ?? 'Product Name',
+                allWordsCapitilize(product.name) ?? 'Product Name',
                 textDirection: TextDirection.ltr,
                 maxLines: 1,
                 style: Constants.smallRegularHeading,

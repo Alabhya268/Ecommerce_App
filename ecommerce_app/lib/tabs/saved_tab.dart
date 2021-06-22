@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/constants.dart';
 import 'package:ecommerce_app/services/firebase_services.dart';
-import 'package:ecommerce_app/widgets/custom_action_bar.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,7 @@ class SavedTab extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.active) {
               return ListView(
                 padding: EdgeInsets.only(
-                  top: 72 + statusBarHeight,
+                  top: 12 + statusBarHeight,
                   bottom: 12,
                 ),
                 children: snapshot.data.docs.map(
@@ -57,9 +56,6 @@ class SavedTab extends StatelessWidget {
             }
             return null;
           },
-        ),
-        CustomActionBar(
-          title: 'Saved',
         ),
       ],
     );
