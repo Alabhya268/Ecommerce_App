@@ -63,8 +63,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _registerFormLoading = false;
 
-  String _registerEmail = null;
-  String _registerPassword = null;
+  String _registerEmail = '';
+  String _registerPassword = '';
 
   FocusNode _passwordFocusNode;
 
@@ -153,7 +153,14 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 text: 'Login',
                 onPressed: () {
-                  _submitForm();
+                  if (_registerEmail.isNotEmpty &&
+                      _registerPassword.isNotEmpty) {
+                    _submitForm();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('All fields are necessary'),
+                    ));
+                  }
                 },
                 isLoading: _registerFormLoading,
               ),

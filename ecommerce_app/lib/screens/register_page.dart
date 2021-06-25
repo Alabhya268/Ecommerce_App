@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     String _createAccountFeedback = await _firebaseServices.createAccount(
-      name: _name,
+      name: _registerName,
       email: _registerEmail,
       password: _registerPassword,
     );
@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String _registerEmail = '';
   String _registerPassword = '';
-  String _name = '';
+  String _registerName = '';
 
   FocusNode _passwordFocusNode;
 
@@ -106,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: 'Name...',
                 textInputAction: TextInputAction.next,
                 onChanged: (value) {
-                  _name = value;
+                  _registerName = value;
                 },
               ),
               CustomInput(
@@ -143,7 +143,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 text: 'Create New Account',
                 onPressed: () {
-                  _submitForm();
+                  if (_registerEmail.isNotEmpty &&
+                      _registerName.isNotEmpty &&
+                      _registerPassword.isNotEmpty) {
+                    _submitForm();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('All fields are necessary'),
+                    ));
+                  }
                 },
                 isLoading: _registerFormLoading,
               ),
